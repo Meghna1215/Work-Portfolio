@@ -59,7 +59,7 @@ const posts = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Personal portfolio — BIM, CAD automation and software development." />
-    <title>Your Name — Portfolio</title>
+    <title>Meghna Jayanarayanan — Portfolio</title>
   </head>
 
   <body>
@@ -86,10 +86,12 @@ const posts = [
     </header>
 
     <main>
+
       <!-- HOME -->
       <section id="home" class="section hero">
         <div class="hero-grid">
-          <div class="hero-intro">
+          <!-- Left side: Slides in from left -->
+          <div class="hero-intro slide-from-left delay-1">
             <p class="eyebrow">Portfolio / 2026</p>
             <h1>Meghna<br />Jayanarayanan</h1>
             <div class="accent-line"></div>
@@ -101,14 +103,16 @@ const posts = [
             </div>
           </div>
 
-          <div class="portrait-frame">
+          <!-- Center side: Zooms/fades in -->
+          <div class="portrait-frame fade-zoom-in delay-2">
             <div class="portrait-placeholder">
               <span>YOUR<br />IMAGE</span>
               <small>replace with portrait / profile image</small>
             </div>
           </div>
 
-          <div class="hero-copy">
+          <!-- Right side: Slides in from right -->
+          <div class="hero-copy slide-from-right delay-3">
             <p class="eyebrow">— Introduction</p>
             <h2>BIM &amp;<br />Software Developer</h2>
             <p>
@@ -257,7 +261,7 @@ const posts = [
     </main>
 
     <footer>
-      <span>YN / Portfolio</span>
+      <span>MJ / Portfolio</span>
       <span>Built with intention.</span>
     </footer>
 
@@ -296,5 +300,65 @@ const posts = [
 
       sections.forEach((section) => observer.observe(section));
     </script>
+
+    <script>
+  const toggle = document.querySelector(".menu-toggle");
+  const mobileNav = document.querySelector(".mobile-nav");
+
+  toggle?.addEventListener("click", () => {
+    const open = document.body.classList.toggle("menu-open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
+
+  document.querySelectorAll(".mobile-nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      document.body.classList.remove("menu-open");
+      toggle?.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  const sections = [...document.querySelectorAll("main > section[id]")];
+  const navLinks = [...document.querySelectorAll(".desktop-nav .nav-link")];
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+      navLinks.forEach((link) =>
+        link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`)
+      );
+    },
+    { threshold: [0.25, 0.5, 0.75] }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+
+  // --- NEW ANIMATION REPLAY OBSERVER ---
+  const heroElements = document.querySelectorAll(".slide-from-left, .slide-from-right, .fade-zoom-in");
+  const heroSection = document.querySelector("#home");
+
+  if (heroSection) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Re-trigger animation when home comes into view
+            heroElements.forEach((el) => el.classList.add("animate"));
+          } else {
+            // Reset state when scrolling away so it can play again
+            heroElements.forEach((el) => el.classList.remove("animate"));
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    heroObserver.observe(heroSection);
+  }
+</script>
+
   </body>
 </html>
