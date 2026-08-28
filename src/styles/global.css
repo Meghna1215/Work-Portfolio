@@ -264,6 +264,11 @@ h1, h2, h3, p { margin-top: 0; }
   gap: clamp(36px, 5vw, 70px);
 }
 
+
+.hero-intro {
+  margin-left: -80px; /* */
+}
+
 .hero-intro h1 {
   color: var(--gold);
   font-size: clamp(2.2rem, 4vw, 3.55rem);
@@ -272,16 +277,17 @@ h1, h2, h3, p { margin-top: 0; }
   margin-bottom: 14px;
 }
 
-.accent-line {
+/* .accent-line {
   width: 80px;
   height: 5px;
   background: var(--gold);
   margin: 18px 0 82px;
-}
+} */
 
 .socials {
   display: flex;
   align-items: center;
+  margin-top: 50px;
   gap: 20px;
   font-weight: 700;
   flex-wrap: wrap;
