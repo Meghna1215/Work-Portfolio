@@ -69,7 +69,7 @@ const posts = [
 
     <!-- HEADER -->
 <header class="site-header">
-  
+
  <a class="brand" href="#home" aria-label="Go to home">
     <span>MJ<span class="dot">.</span></span>
   </a>
@@ -255,79 +255,86 @@ const posts = [
       </section>
 
 
-      <!-- WORKS -->
-      <section id="works" class="section works-section">
 
-        <div class="section-heading">
+<!-- WORKS STACKED CATALOG SECTION -->
+<section id="works" class="section stacked-works-section">
+  <div class="section-heading">
+    <h2>PROJECTS</h2>
+    <span class="scroll-hint">Scroll to explore</span>
+  </div>
 
-          <div>
-            <p class="eyebrow">02 — Selected work</p>
-            <h2>Works</h2>
+  <div class="stacked-cards-container">
+    <!-- Project 01 -->
+    <div class="project-stack-card">
+      <div class="project-stack-header">
+        <div class="project-info-left">
+          <span class="stack-num">01</span>
+          <div class="stack-titles">
+            <span class="stack-type">CLIENT</span>
+            <h3>Nextlevel Studio</h3>
           </div>
-
-          <span class="scroll-hint">
-            ← drag / swipe →
-          </span>
-
         </div>
-
-
-        <div class="horizontal-track works-track">
-
-          {projects.map((project) => (
-
-            <article class="project-card">
-
-              <div class="project-image">
-
-                <span>
-                  {project.number}
-                </span>
-
-                <div class="project-image-mark">
-                  PROJECT<br />
-                  IMAGE
-                </div>
-
-              </div>
-
-
-              <div class="project-meta">
-
-                <span>
-                  {project.type}
-                </span>
-
-                <span>
-                  {project.tag}
-                </span>
-
-              </div>
-
-
-              <h3>
-                {project.title}
-              </h3>
-
-
-              <p>
-                {project.text}
-              </p>
-
-
-              <a href="#" class="text-link">
-                View project
-                <span>↗</span>
-              </a>
-
-            </article>
-
-          ))}
-
+        <a href="#" class="live-project-btn">LIVE PROJECT</a>
+      </div>
+      
+      <!-- Multiple Image Previews inside the card -->
+      <div class="stack-images-grid">
+        <div class="stack-img-box" style="background: linear-gradient(135deg, rgba(75,30,35,0.6), var(--tobacco));">
+          <span>Landscape View</span>
         </div>
+        <div class="stack-img-box" style="background: linear-gradient(135deg, rgba(28,36,48,0.6), var(--olive));">
+          <span>Detail View</span>
+        </div>
+      </div>
+    </div>
 
-      </section>
+    <!-- Project 02 -->
+    <div class="project-stack-card">
+      <div class="project-stack-header">
+        <div class="project-info-left">
+          <span class="stack-num">02</span>
+          <div class="stack-titles">
+            <span class="stack-type">PERSONAL</span>
+            <h3>Aura Brand Identity</h3>
+          </div>
+        </div>
+        <a href="#" class="live-project-btn">VIEW PROJECT</a>
+      </div>
+      
+      <div class="stack-images-grid">
+        <div class="stack-img-box" style="background: linear-gradient(135deg, rgba(107,111,78,0.6), var(--graphite));">
+          <span>Moodboard</span>
+        </div>
+        <div class="stack-img-box" style="background: linear-gradient(135deg, rgba(200,155,74,0.4), var(--merlot));">
+          <span>Typography System</span>
+        </div>
+      </div>
+    </div>
 
+    <!-- Project 03 -->
+    <div class="project-stack-card">
+      <div class="project-stack-header">
+        <div class="project-info-left">
+          <span class="stack-num">03</span>
+          <div class="stack-titles">
+            <span class="stack-type">CLIENT</span>
+            <h3>Solaris Digital</h3>
+          </div>
+        </div>
+        <a href="#" class="live-project-btn">LIVE PROJECT</a>
+      </div>
+      
+      <div class="stack-images-grid">
+        <div class="stack-img-box" style="background: linear-gradient(135deg, var(--tobacco), var(--midnight));">
+          <span>Interface Design</span>
+        </div>
+        <div class="stack-img-box" style="background: linear-gradient(135deg, var(--merlot), var(--olive));">
+          <span>Mobile View</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       <!-- CONTACT -->
       <section id="contact" class="section contact-section">
@@ -682,6 +689,34 @@ const posts = [
       }
 
     </script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const catalogItems = document.querySelectorAll(".catalog-item");
+    const previewCards = document.querySelectorAll(".preview-card");
+
+    catalogItems.forEach((item) => {
+      // Trigger on mouse enter (hover) or click
+      ["mouseenter", "click"].forEach((eventType) => {
+        item.addEventListener(eventType, () => {
+          const targetId = item.getAttribute("data-project");
+
+          // Update active styles on list items
+          catalogItems.forEach((el) => el.classList.remove("active"));
+          item.classList.add("active");
+
+          // Update active preview card
+          previewCards.forEach((card) => {
+            card.classList.remove("active-preview");
+            if (card.id === `preview-${targetId}`) {
+              card.classList.add("active-preview");
+            }
+          });
+        });
+      });
+    });
+  });
+</script>
 
   </body>
 </html>
