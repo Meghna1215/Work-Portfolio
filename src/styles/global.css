@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Kanit:wght@700;800&family=Playfair+Display:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
 
 :root {
   --bone: #E6E0D6;
@@ -452,10 +452,10 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .stacked-works-section .section-heading h2 {
-  font-family: "Kanit", "DM Sans", sans-serif;
-  font-weight: 800;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 700;
   font-size: clamp(2.4rem, 6vw, 4.6rem);
-  letter-spacing: -.02em;
+  letter-spacing: -.055em;   /* same tight tracking as the hero name */
   line-height: 1;
   background: linear-gradient(180deg, #f4f4f4 10%, #8e939b 100%);
   -webkit-background-clip: text;
@@ -515,11 +515,11 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .stack-num {
-  font-family: "Kanit", "DM Sans", sans-serif;
-  font-weight: 800;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 700;
   font-size: clamp(2.6rem, 5vw, 4.4rem);
   line-height: 1;
-  letter-spacing: -.02em;
+  letter-spacing: -.055em;
   background: linear-gradient(180deg, #f4f4f4 10%, #8e939b 100%);
   -webkit-background-clip: text;
   background-clip: text;
