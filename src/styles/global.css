@@ -272,6 +272,21 @@ h1, h2, h3, p { margin-top: 0; }
 .socials a { transition: color .2s ease, transform .2s ease; }
 .socials a:hover { color: var(--gold); transform: translateY(-2px); }
 
+/* LinkedIn / GitHub logos: sized in em so they scale with the text beside them,
+   and filled with currentColor so they pick up the gold hover colour. */
+.socials .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.socials .social-icon svg {
+  width: 1.55em;
+  height: 1.55em;
+  display: block;
+  fill: currentColor;
+}
+
 .hero-portrait {
   grid-area: portrait;
   width: 100%;
@@ -321,7 +336,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .section-heading h2 {
   margin: 0;
-  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   letter-spacing: -.06em;
   line-height: .85;
 }
@@ -404,7 +419,7 @@ h1, h2, h3, p { margin-top: 0; }
    otherwise position: sticky inside it cannot work. */
 .stacked-works-section {
   /* height of the PROJECTS title strip, below the fixed site header */
-  --works-heading-h: clamp(3.4rem, 6.5vw, 5.6rem);
+  --works-heading-h: clamp(3rem, 5vw, 4.2rem);
   /* where the first card sticks: just under header + title */
   --works-top: calc(var(--header-height) + var(--works-heading-h) + 14px);
   /* gap between the peeking edges of stacked cards */
@@ -412,11 +427,14 @@ h1, h2, h3, p { margin-top: 0; }
   /* scroll distance between one card and the next: bigger = slower, calmer
      stacking (smaller = faster) */
   --stack-gap: 44vh;
-  /* every card has this height: fits the screen below the pinned title */
+  /* widest the cards can get (they never exceed the page's content width) */
+  --cards-max-w: 1400px;
+  /* every card has this height: fits the screen below the pinned title.
+     (the last number is the tallest a card may get on big screens) */
   --card-h: clamp(
     370px,
-    calc(100svh - var(--works-top) - (var(--n, 4) - 1) * var(--stack-step) - 24px),
-    700px
+    calc(100svh - var(--works-top) - (var(--n, 4) - 1) * var(--stack-step) - 12px),
+    860px
   );
   /* distance from the top of the heading strip to where the LAST card sticks */
   --stack-reach: calc(var(--works-top) + (var(--n, 4) - 1) * var(--stack-step));
@@ -451,21 +469,8 @@ h1, h2, h3, p { margin-top: 0; }
   background: var(--graphite);
 }
 
-.stacked-works-section .section-heading h2 {
-  font-family: "DM Sans", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(2.4rem, 6vw, 4.6rem);
-  letter-spacing: -.055em;   /* same tight tracking as the hero name */
-  line-height: 1;
-  background: linear-gradient(180deg, #f4f4f4 10%, #8e939b 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
 .stacked-cards-container {
-  width: min(1100px, 100%);
+  width: min(var(--cards-max-w), 100%);
   margin: 0 auto;
   /* cancels the heading's large margin-bottom (see above) */
   margin-top: calc(-1 * (var(--card-h) + var(--stack-reach) - var(--works-top)));
@@ -534,17 +539,9 @@ h1, h2, h3, p { margin-top: 0; }
   min-width: 0;
 }
 
-.stack-type {
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--bone);
-}
-
 .stack-titles h3 {
   margin: 0;
-  font-size: clamp(.95rem, 1.5vw, 1.2rem);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 500;
   letter-spacing: -.01em;
   color: var(--muted);
@@ -661,48 +658,6 @@ a.live-project-btn:hover {
 
 .contact-row a:hover { color: var(--graphite); }
 
-/* BLOG */
-.blog-section { background: var(--bone); color: var(--graphite); }
-
-.blog-section .eyebrow,
-.blog-section .scroll-hint { color: rgba(18,18,18,.58); }
-
-.blog-card {
-  min-height: 470px;
-  padding: 30px;
-  background: var(--midnight);
-  color: var(--bone);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.blog-card--merlot { background: var(--merlot); }
-
-.blog-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  color: var(--muted);
-  font-size: .72rem;
-  text-transform: uppercase;
-  letter-spacing: .07em;
-}
-
-.blog-card h3 {
-  max-width: 330px;
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  line-height: .98;
-  letter-spacing: -.045em;
-  margin: 25px 0 20px;
-}
-
-.blog-card p {
-  max-width: 330px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-
 /* FOOTER */
 footer {
   padding: 24px clamp(24px, 7vw, 100px);
@@ -760,7 +715,7 @@ footer {
   }
 
   .hero-copy h2 {
-    font-size: clamp(1.1rem, 3.2vw, 1.5rem);
+    font-size: clamp(2rem, 4vw, 2rem);
     margin-bottom: 6px;
   }
 
@@ -863,7 +818,6 @@ footer {
   .mobile-nav a:nth-child(1) { color: var(--bone); }
   .mobile-nav a:nth-child(2) { color: var(--olive); }
   .mobile-nav a:nth-child(3) { color: var(--tobacco); }
-  .mobile-nav a:nth-child(4) { color: var(--merlot); }
 
   /* Works cards on phones */
   .stacked-works-section { --stack-step: 12px; --stack-gap: 32vh; }
