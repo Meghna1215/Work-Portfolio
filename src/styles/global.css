@@ -518,20 +518,6 @@ h1, h2, h3, p { margin-top: 0; }
   gap: clamp(14px, 2vw, 26px);
   min-width: 0;
 }
-
-.stack-num {
-  font-family: "DM Sans", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(2.6rem, 5vw, 4.4rem);
-  line-height: 1;
-  letter-spacing: -.055em;
-  background: linear-gradient(180deg, #f4f4f4 10%, #8e939b 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
 .stack-titles {
   display: flex;
   flex-direction: column;
@@ -607,7 +593,7 @@ a.live-project-btn:hover {
 
 /* CONTACT */
 .contact-section {
-  background: var(--tobacco);
+  background: var(--merlot);   /* #4B1E23 */
   display: grid;
   place-items: center;
 }
@@ -639,24 +625,32 @@ a.live-project-btn:hover {
 }
 
 .big-link {
+  overflow-wrap: anywhere;
   display: inline-flex;
   gap: 18px;
   align-items: center;
-  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-size: clamp(1rem, 1.7vw, 1.4rem);
   font-weight: 700;
   border-bottom: 2px solid var(--bone);
   padding-bottom: 12px;
-  margin: 25px 0 38px;
+  margin: 25px 0 0;
 }
 
-.contact-row {
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
-  font-weight: 600;
+/* Tablets and phones: stack the two columns so nothing is cut off */
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
 }
 
-.contact-row a:hover { color: var(--graphite); }
+/* very small phones: keep the whole email address on one line */
+@media (max-width: 360px) {
+  .big-link {
+    font-size: .85rem;
+    gap: 12px;
+  }
+}
 
 /* FOOTER */
 footer {
@@ -715,7 +709,7 @@ footer {
   }
 
   .hero-copy h2 {
-    font-size: clamp(2rem, 4vw, 2rem);
+    font-size: clamp(1.1rem, 3.2vw, 1.5rem);
     margin-bottom: 6px;
   }
 

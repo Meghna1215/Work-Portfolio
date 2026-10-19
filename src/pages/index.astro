@@ -26,7 +26,6 @@ const win = (x: number, y: number) => `<rect x="${x}" y="${y}" width="22" height
 // ------------------------------------------------------------
 const skills = [
   {
-    number: "01",
     title: "Model",
     text: "Building coordinated, data-rich BIM models for complex infrastructure projects, from concept through to detailed design.",
     href: `${base}/model/`,   // opens the interactive 3D page (src/pages/model.astro)
@@ -38,7 +37,6 @@ const skills = [
     ]
   },
   {
-    number: "02",
     title: "Coordinate",
     text: "Aligning architecture, structure and services in one federated model, finding clashes early and resolving them before site.",
     href: "#",
@@ -50,7 +48,6 @@ const skills = [
     ]
   },
   {
-    number: "03",
     title: "Collaborate",
     text: "Keeping every discipline on the same page with clear BIM standards, shared workflows and regular model reviews.",
     href: "#",
@@ -62,7 +59,6 @@ const skills = [
     ]
   },
   {
-    number: "04",
     title: "Visualize",
     text: "Turning model data into clear views, sections and visuals that help clients and teams understand the design.",
     href: "#",
@@ -74,7 +70,6 @@ const skills = [
     ]
   },
   {
-    number: "05",
     title: "Automate",
     text: "Cutting repetitive modelling work with Revit API, C# and Python tools that make delivery faster and more repeatable.",
     href: "#",
@@ -114,13 +109,13 @@ const skills = [
 
   <nav class="desktop-nav" aria-label="Main navigation">
     <a class="nav-link active" href="#home">Home</a>
-    <a class="nav-link" href="#works">Works</a>
+    <a class="nav-link" href="#skills">Skills</a>
     <a class="nav-link" href="#contact">Contact</a>
   </nav>
 
   <nav class="mobile-nav" aria-label="Mobile navigation">
     <a href="#home">Home</a>
-    <a href="#works">Works</a>
+    <a href="#skills">Skills</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -147,6 +142,8 @@ const skills = [
               <a
                 class="social-icon"
                 href="https://www.linkedin.com/in/meghna-jayanarayanan-481359226"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 title="LinkedIn"
               >
@@ -157,6 +154,8 @@ const skills = [
               <a
                 class="social-icon"
                 href="https://github.com/Meghna1215"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="GitHub"
                 title="GitHub"
               >
@@ -305,8 +304,8 @@ const skills = [
 
 
 
-      <!-- WORKS: STACKED CARDS -->
-      <section id="works" class="section stacked-works-section" style={`--n:${skills.length}`}>
+      <!-- SKILLS: STACKED CARDS -->
+      <section id="skills" class="section stacked-works-section" style={`--n:${skills.length}`}>
 
         <!-- Heading + cards share this wrapper. It ends exactly where the last
              card finishes stacking, so heading and cards are released together
@@ -326,7 +325,6 @@ const skills = [
 
                 <div class="project-stack-header">
                   <div class="project-info-left">
-                    <span class="stack-num">{p.number}</span>
                     <div class="stack-titles">
                       <h3>{p.title}</h3>
                     </div>
@@ -382,28 +380,12 @@ const skills = [
 
             <a
               class="big-link"
-              href="mailto:YOUR_EMAIL@example.com"
+              href="mailto:meghnajayanarayanan@gmail.com"
             >
-              YOUR_EMAIL@example.com
+              meghnajayanarayanan@gmail.com
               <span>↗</span>
             </a>
 
-
-            <div class="contact-row">
-
-              <a href="#">
-                LinkedIn
-              </a>
-
-              <a href="#">
-                GitHub
-              </a>
-
-              <a href="#">
-                Download CV
-              </a>
-
-            </div>
 
           </div>
 
