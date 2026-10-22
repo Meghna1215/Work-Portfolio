@@ -591,6 +591,13 @@ a.live-project-btn:hover {
   object-fit: cover;
 }
 
+/* Photos: stacked on top of each other, only .is-active is visible */
+.stack-img-box img {
+  opacity: 0;
+  transition: opacity .9s ease;
+}
+.stack-img-box img.is-active { opacity: 1; }
+
 /* CONTACT */
 .contact-section {
   background: var(--merlot);   /* #4B1E23 */
