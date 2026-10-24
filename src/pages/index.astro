@@ -27,11 +27,16 @@ const win = (x: number, y: number) => `<rect x="${x}" y="${y}" width="22" height
 const photos = (folder: string, files: string[]) =>
   files.map((f) => encodeURI(`${base}/${folder}/${f}`));
 
-// The card has 3 image slots. Photos are dealt out round-robin
-// (1st -> slot 1, 2nd -> slot 2, 3rd -> slot 3, 4th -> slot 1 ...).
+// The card has 3 image slots: [small top, small bottom, large right].
+// `images` can be given two ways:
+//  1) a flat list  -> photos are dealt out round-robin
+//     (1st -> slot 1, 2nd -> slot 2, 3rd -> slot 3, 4th -> slot 1 ...)
+//  2) three lists  -> you choose exactly which photos go in which slot
 // A slot with more than one photo cross-fades between them.
-const toSlots = (imgs: string[]) =>
-  [0, 1, 2].map((n) => imgs.filter((_, i) => i % 3 === n));
+const toSlots = (imgs: string[] | string[][]): string[][] =>
+  Array.isArray(imgs[0])
+    ? [0, 1, 2].map((n) => (imgs as string[][])[n] ?? [])
+    : [0, 1, 2].map((n) => (imgs as string[]).filter((_, i) => i % 3 === n));
 
 // ------------------------------------------------------------
 // One card per skill. Edit the text freely.
@@ -44,13 +49,14 @@ const skills = [
     title: "Model",
     text: "Building coordinated, data-rich BIM models for complex infrastructure projects, from concept through to detailed design.",
     href: `${base}/model/`,   // opens the interactive 3D page (src/pages/model.astro)
-    images: photos("Model", [
-      "VIADUCT - BIM 360 - 1.png",
-      "VIADUCT - BIM 360 - 2.png",
-      "TBM TWIN TUNNEL.png",
-      "TBM TUNNEL RING.png",
-      "STEEL BRIDGE - BIM 360 - 2.png"
-    ]),
+    images: [
+      // small top
+      photos("Model", ["TBM TUNNEL RING.png", "TBM TWIN TUNNEL.png"]),
+      // small bottom
+      photos("Model", ["STEEL BRIDGE - BIM 360 - 2.png"]),
+      // large right
+      photos("Model", ["VIADUCT - BIM 360 - 1.png", "VIADUCT - BIM 360 - 2.png"])
+    ],
     visuals: [
       wrap("#4B1E23", `<g ${line}><path d="M110 170 L200 205 L290 170 V90 L200 125 L110 90 Z"/><path d="M200 125 V205"/><path d="M110 90 L200 55 L290 90"/></g>`),
       wrap("#3a171b", `<g ${line}><rect x="90" y="50" width="220" height="160"/><path d="M90 103 H310 M90 157 H310 M163 50 V210 M237 50 V210"/></g><rect x="163" y="103" width="74" height="54" fill="#C89B4A" fill-opacity=".7"/>`),
@@ -60,7 +66,7 @@ const skills = [
   {
     title: "Coordinate",
     text: "Aligning architecture, structure and services in one federated model, finding clashes early and resolving them before site.",
-    href: "#",
+    href: `${base}/coordinate/`,   // opens src/pages/coordinate.astro
     images: photos("Coordinate", [
       "Clash Detection.png",
       "Running a clash.png",
@@ -75,7 +81,7 @@ const skills = [
   {
     title: "Collaborate",
     text: "Keeping every discipline on the same page with clear BIM standards, shared workflows and regular model reviews.",
-    href: "#",
+    href: `${base}/collaborate/`,   // opens src/pages/collaborate.astro
     images: photos("Collaborate", [
       "CLOUD MODEL - 1.png",
       "TRACK PACKAGES - 2.png",
@@ -92,7 +98,7 @@ const skills = [
   {
     title: "Visualize",
     text: "Turning model data into clear views, sections and visuals that help clients and teams understand the design.",
-    href: "#",
+    href: `${base}/visualize/`,   // opens src/pages/visualize.astro
     images: photos("Visualize", [
       "Igloo Exterior view_Day.jpg",
       "Igloo Platform view_Day.jpg",
@@ -365,7 +371,7 @@ const skills = [
                       <h3>{p.title}</h3>
                     </div>
                   </div>
-                  <a class="live-project-btn" href={p.href}>Explore Project</a>
+                  <a class="live-project-btn" href={p.href}>View Project</a>
                 </div>
 
                 <p class="stack-text">{p.text}</p>

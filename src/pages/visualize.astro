@@ -1,0 +1,346 @@
+---
+import "../styles/global.css";
+
+// Works whether your configured base ends with a slash or not.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// ------------------------------------------------------------
+// PHOTOS: files inside  public/Visualize/
+// File names must match exactly (including capitals and spaces).
+// ------------------------------------------------------------
+const img = (file: string) => encodeURI(`${base}/Visualize/${file}`);
+
+// ------------------------------------------------------------
+// PAGE CONTENT: edit freely
+// ------------------------------------------------------------
+const title = "Visualize";
+const tag = "Real-time Visualization";
+const headline = "Design options made visible before they are built.";
+const intro =
+  "Real-time visualizations used to compare foot-over-bridge canopy options, evaluate spatial experience and communicate design intent.";
+
+const sectionLabel = "Canopy options";
+const sectionTitle = "Foot Over Bridge Designs";
+
+// One card per canopy. Use 1 image for a tall card, 2 images for a stacked pair
+// (first = top, second = bottom).
+const canopies = [
+  {
+    title: "Igloo Canopy",
+    text: "A faceted glazed canopy explored through exterior and platform-level views.",
+    images: [
+      { src: img("Igloo Exterior view_Day.jpg"), alt: "Igloo canopy exterior view in daylight" },
+      { src: img("Igloo Platform view_Day.jpg"), alt: "Igloo canopy platform view in daylight" }
+    ]
+  },
+  {
+    title: "Spiral Canopy",
+    text: "A ribbed enclosure visualized from within the pedestrian walkway at night.",
+    images: [
+      { src: img("Spiral Interior view_Night.jpg"), alt: "Spiral canopy interior at night" }
+    ]
+  },
+  {
+    title: "Wave Canopy",
+    text: "A flowing roof concept examined through exterior and platform-level night views.",
+    images: [
+      { src: img("Wave-exterior-night.jpg"), alt: "Wave canopy exterior view at night" },
+      { src: img("Wave Platform view_Night.jpg"), alt: "Wave canopy platform view at night" }
+    ]
+  }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Real-time visualization of foot-over-bridge canopy options."
+    />
+    <meta name="theme-color" content="#77502F" />
+    <title>{title} — Meghna Jayanarayanan</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <a class="brand" href={`${base}/#home`} aria-label="Go to home">
+        <span>MJ<span class="dot">.</span></span>
+      </a>
+
+      <a class="back-link" href={`${base}/#skills`}>
+        <span aria-hidden="true">←</span> Back to Skills
+      </a>
+    </header>
+
+
+    <main class="coordinate-page">
+
+      <!-- ===== SCROLL 1: full-screen brown title ===== -->
+      <section class="coord-hero">
+        <div class="coord-hero-inner">
+          <div class="coord-hero-main">
+            <h1>{title}</h1>
+            <h2>{headline}</h2>
+            <p>{intro}</p>
+          </div>
+
+          <p class="coord-tag">{tag}</p>
+        </div>
+      </section>
+
+
+      <!-- ===== SCROLL 2: canopy studies ===== -->
+      <section class="canopy-section">
+        <p class="canopy-label">{sectionLabel}</p>
+        <h2 class="canopy-title">{sectionTitle}</h2>
+
+        <div class="canopy-grid">
+          {canopies.map((c) => (
+            <article class="canopy-card">
+              <div class:list={["canopy-images", c.images.length > 1 && "canopy-images--pair"]}>
+                {c.images.map((image) => (
+                  <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                ))}
+              </div>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+      <span>MJ / Portfolio</span>
+      <span>Built with intention.</span>
+    </footer>
+
+
+    <script>
+      import Lenis from "lenis";
+
+      // ==========================================
+      // SMOOTH SCROLLING (same settings as the home page)
+      // ==========================================
+
+      const reduceMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduceMotion) {
+        new Lenis({
+          autoRaf: true,
+          lerp: 0.08,
+          wheelMultiplier: 0.8,
+          anchors: true
+        });
+      }
+    </script>
+
+  </body>
+</html>
+
+<style is:global>
+  body {
+    background: var(--graphite);
+  }
+
+  /* ---------- header back link ---------- */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--bone);
+    opacity: .86;
+    transition: opacity .25s ease, color .25s ease, gap .25s ease;
+  }
+
+  .back-link:hover {
+    color: #fff;
+    opacity: 1;
+    gap: 14px;
+    text-shadow:
+      0 0 8px rgba(200, 155, 74, 0.8),
+      0 0 16px rgba(200, 155, 74, 0.5);
+  }
+
+  /* ---------- SCROLL 1: full-screen brown hero ---------- */
+  .coord-hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding:
+      calc(var(--header-height) + 24px)
+      clamp(24px, 6vw, 90px)
+      60px;
+    background: #77502F;   /* Visualize brown */
+    color: var(--bone);
+  }
+
+  .coord-hero-inner {
+    width: min(1400px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 260px);
+    column-gap: clamp(16px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .coord-hero-main h1 {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(3.6rem, 11vw, 9.5rem);
+    line-height: .95;
+    letter-spacing: -.06em;
+    color: var(--bone);
+  }
+
+  .coord-hero-main h2 {
+    margin: clamp(10px, 2vw, 26px) 0 18px;
+    max-width: 20em;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.9vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -.04em;
+    color: var(--bone);
+  }
+
+  .coord-hero-main p {
+    margin: 0;
+    max-width: 34em;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(230, 224, 214, .8);
+  }
+
+  .coord-tag {
+    margin: 0;
+    padding-top: 0;
+    text-align: right;
+    font-size: .85rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(230, 224, 214, .8);
+  }
+
+  /* ---------- SCROLL 2: canopy studies (fits exactly one screen) ---------- */
+  .canopy-section {
+    height: 100svh;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    padding:
+      calc(var(--header-height) - 6px)
+      clamp(24px, 4.5vw, 70px)
+      clamp(18px, 3vh, 36px);
+    background: #15171c;
+  }
+
+  .canopy-section > * {
+    width: min(1500px, 100%);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .canopy-label {
+    flex: none;
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .canopy-title {
+    flex: none;
+    margin-top: 0;
+    margin-bottom: clamp(12px, 2.2vh, 24px);
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -.045em;
+    color: var(--bone);
+  }
+
+  /* the grid takes whatever height is left on the screen */
+  .canopy-grid {
+    flex: 1 1 0;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 2vw, 26px);
+  }
+
+  .canopy-card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 14px 18px;
+    border: 1px solid rgba(230, 224, 214, .18);
+    background: #1c1f26;
+  }
+
+  /* images fill the card, text sits underneath */
+  .canopy-images {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .canopy-images img {
+    display: block;
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    object-fit: cover;
+    background: #101216;
+  }
+
+  .canopy-card h3 {
+    flex: none;
+    margin: 0 8px 6px;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    color: var(--bone);
+  }
+
+  .canopy-card p {
+    flex: none;
+    margin: 0 8px;
+    font-size: .95rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 900px) {
+    .coord-hero-inner {
+      grid-template-columns: 1fr;
+      row-gap: 18px;
+    }
+
+    .coord-tag { text-align: left; }
+
+    /* on phones / small screens let the page scroll normally */
+    .canopy-section { height: auto; min-height: 0; padding-top: calc(var(--header-height) + 20px); }
+    .canopy-grid { flex: none; grid-template-columns: 1fr; }
+    .canopy-images { flex: none; height: clamp(300px, 70vw, 480px); }
+  }
+</style>

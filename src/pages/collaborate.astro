@@ -1,0 +1,344 @@
+---
+import "../styles/global.css";
+
+// Works whether your configured base ends with a slash or not.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// ------------------------------------------------------------
+// PHOTOS: files inside  public/Collaborate/
+// File names must match exactly (including capitals and spaces).
+// ------------------------------------------------------------
+const img = (file: string) => encodeURI(`${base}/Collaborate/${file}`);
+
+// ------------------------------------------------------------
+// PAGE CONTENT: edit freely
+// ------------------------------------------------------------
+const title = "Collaborate";
+const tag = "Cloud BIM & CDE";
+const headline = "Shared information, traceable decisions and accountable delivery.";
+const intro =
+  "Managing shared cloud models, design packages and coordination issues through a traceable CDE workflow from publication to verified resolution.";
+
+// One section per step (scroll 2 onwards).
+const steps = [
+  {
+    number: "01",
+    heading: "Cloud Model Published",
+    text: "A coordinated model is published to the shared cloud environment for the wider team to review.",
+    image: img("CLOUD MODEL - 1.png"),
+    alt: "Coordinated model published to the shared cloud environment"
+  },
+  {
+    number: "02",
+    heading: "Packages Tracked",
+    text: "Discipline packages are shared and tracked against a common project timeline.",
+    image: img("TRACK PACKAGES - 2.png"),
+    alt: "Design package timeline in the cloud collaboration platform"
+  },
+  {
+    number: "03",
+    heading: "Issue Raised",
+    text: "A model-based issue is pinned to its exact location with the required context.",
+    image: img("ISSUE RAISED - 3.png"),
+    alt: "Model-based issue pinned to its location in the cloud model"
+  },
+  {
+    number: "04",
+    heading: "Issue Tracked",
+    text: "Ownership, status and responses are managed through one traceable record.",
+    image: img("ISSUE TRACKING - 4.png"),
+    alt: "Issues register showing type, title, status and ownership"
+  },
+  {
+    number: "05",
+    heading: "Resolution Verified",
+    text: "The updated model is reviewed and the issue is closed once the correction is confirmed.",
+    image: img("ISSUE SOLVED - 5.png"),
+    alt: "Updated model reviewed and the issue closed"
+  }
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cloud BIM and CDE: shared models, tracked packages and traceable issues."
+    />
+    <meta name="theme-color" content="#1C2430" />
+    <title>{title} — Meghna Jayanarayanan</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <a class="brand" href={`${base}/#home`} aria-label="Go to home">
+        <span>MJ<span class="dot">.</span></span>
+      </a>
+
+      <a class="back-link" href={`${base}/#skills`}>
+        <span aria-hidden="true">←</span> Back to Skills
+      </a>
+    </header>
+
+
+    <main class="coordinate-page">
+
+      <!-- ===== SCROLL 1: full-screen navy title ===== -->
+      <section class="coord-hero">
+        <div class="coord-hero-inner">
+          <div class="coord-hero-main">
+            <h1>{title}</h1>
+            <h2>{headline}</h2>
+            <p>{intro}</p>
+          </div>
+
+          <p class="coord-tag">{tag}</p>
+        </div>
+      </section>
+
+
+      <!-- ===== SCROLL 2-6: the five CDE steps ===== -->
+      {steps.map((step) => (
+        <section class="coord-step">
+          <div class="step-text">
+            <span class="step-number">{step.number}</span>
+            <h2>{step.heading}</h2>
+            <p>{step.text}</p>
+          </div>
+
+          <figure class="step-figure">
+            <img src={step.image} alt={step.alt} loading="lazy" decoding="async" />
+            <a
+              class="view-full"
+              href={step.image}
+              target="_blank"
+              rel="noopener"
+            >
+              View full image <span aria-hidden="true">↗</span>
+            </a>
+          </figure>
+        </section>
+      ))}
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+      <span>MJ / Portfolio</span>
+      <span>Built with intention.</span>
+    </footer>
+
+
+    <script>
+      import Lenis from "lenis";
+
+      // ==========================================
+      // SMOOTH SCROLLING (same settings as the home page)
+      // ==========================================
+
+      const reduceMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduceMotion) {
+        new Lenis({
+          autoRaf: true,
+          lerp: 0.08,
+          wheelMultiplier: 0.8,
+          anchors: true
+        });
+      }
+    </script>
+
+  </body>
+</html>
+
+<style is:global>
+  body {
+    background: var(--graphite);
+  }
+
+  /* ---------- header back link ---------- */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--bone);
+    opacity: .86;
+    transition: opacity .25s ease, color .25s ease, gap .25s ease;
+  }
+
+  .back-link:hover {
+    color: #fff;
+    opacity: 1;
+    gap: 14px;
+    text-shadow:
+      0 0 8px rgba(200, 155, 74, 0.8),
+      0 0 16px rgba(200, 155, 74, 0.5);
+  }
+
+  /* ---------- SCROLL 1: full-screen navy hero ---------- */
+  .coord-hero {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding:
+      calc(var(--header-height) + 24px)
+      clamp(24px, 6vw, 90px)
+      60px;
+    background: var(--midnight);
+    color: var(--bone);
+  }
+
+  .coord-hero-inner {
+    width: min(1400px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 260px);
+    column-gap: clamp(16px, 3vw, 48px);
+    align-items: start;
+  }
+
+  .coord-hero-main h1 {
+    margin: 0;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(3.6rem, 11vw, 9.5rem);
+    line-height: .95;
+    letter-spacing: -.06em;
+    color: var(--bone);
+  }
+
+  .coord-hero-main h2 {
+    margin: clamp(10px, 2vw, 26px) 0 18px;
+    max-width: 17em;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.9vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -.04em;
+    color: var(--bone);
+  }
+
+  .coord-hero-main p {
+    margin: 0;
+    max-width: 34em;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(230, 224, 214, .8);
+  }
+
+  .coord-tag {
+    margin: 0;
+    padding-top: 0;
+    text-align: right;
+    font-size: .85rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(230, 224, 214, .8);
+  }
+
+  /* ---------- SCROLL 2-6: steps ---------- */
+  .coord-step {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(0, 2.4fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: center;
+    padding:
+      calc(var(--header-height) + 16px)
+      clamp(24px, 6vw, 90px)
+      40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .step-text { max-width: 26em; min-width: 0; }
+
+  .step-number {
+    display: block;
+    margin-bottom: 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    color: var(--gold);
+  }
+
+  .step-text h2 {
+    margin: 0 0 24px;
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 3.8vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -.04em;
+    overflow-wrap: break-word;
+    color: var(--bone);
+  }
+
+  .step-text p {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .step-figure {
+    position: relative;
+    margin: 0;
+    background: #fff;
+  }
+
+  .step-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(100svh - var(--header-height) - 70px);
+    object-fit: contain;
+    object-position: center;
+    background: #1b1d22;
+  }
+
+  .view-full {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 14px 22px;
+    background: rgba(18, 18, 18, .92);
+    color: var(--bone);
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .25s ease, color .25s ease;
+  }
+
+  .view-full:hover {
+    background: var(--gold);
+    color: var(--graphite);
+  }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 900px) {
+    .coord-hero-inner {
+      grid-template-columns: 1fr;
+      row-gap: 18px;
+    }
+
+    .coord-tag { text-align: left; }
+
+    .coord-step {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      padding-top: calc(var(--header-height) + 28px);
+      padding-bottom: 56px;
+      gap: 28px;
+    }
+
+    .step-figure img { max-height: none; }
+  }
+</style>
