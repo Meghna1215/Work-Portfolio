@@ -40,7 +40,8 @@ const toSlots = (imgs: string[] | string[][]): string[][] =>
 
 // ------------------------------------------------------------
 // One card per skill. Edit the text freely.
-//  - `href`  : link for the "View Project" button (leave out for now = "#")
+//  - `href`  : link for the card's button (leave out for now = "#")
+//  - `button`: text on that button (leave out = "View Project")
 //  - `images`: real photos (see photos() above). Leave as [] to
 //              show the placeholder SVG visuals instead.
 // ------------------------------------------------------------
@@ -49,11 +50,12 @@ const skills = [
     title: "Model",
     text: "Building coordinated, data-rich BIM models for complex infrastructure projects, from concept through to detailed design.",
     href: `${base}/model/`,   // opens the interactive 3D page (src/pages/model.astro)
+    button: "Explore My Models",
     images: [
       // small top
       photos("Model", ["TBM TUNNEL RING.png", "TBM TWIN TUNNEL.png"]),
       // small bottom
-      photos("Model", ["STEEL BRIDGE - BIM 360 - 2.png"]),
+      photos("Model", ["Station_model_thumbnail.png", "STEEL BRIDGE - BIM 360 - 2.png"]),
       // large right
       photos("Model", ["VIADUCT - BIM 360 - 1.png", "VIADUCT - BIM 360 - 2.png"])
     ],
@@ -67,6 +69,7 @@ const skills = [
     title: "Coordinate",
     text: "Aligning architecture, structure and services in one federated model, finding clashes early and resolving them before site.",
     href: `${base}/coordinate/`,   // opens src/pages/coordinate.astro
+    button: "View My Coordination",
     images: photos("Coordinate", [
       "Clash Detection.png",
       "Running a clash.png",
@@ -82,6 +85,7 @@ const skills = [
     title: "Collaborate",
     text: "Keeping every discipline on the same page with clear BIM standards, shared workflows and regular model reviews.",
     href: `${base}/collaborate/`,   // opens src/pages/collaborate.astro
+    button: "Explore My Collaboration",
     images: photos("Collaborate", [
       "CLOUD MODEL - 1.png",
       "TRACK PACKAGES - 2.png",
@@ -99,6 +103,7 @@ const skills = [
     title: "Visualize",
     text: "Turning model data into clear views, sections and visuals that help clients and teams understand the design.",
     href: `${base}/visualize/`,   // opens src/pages/visualize.astro
+    button: "Visualize My Renders",
     images: photos("Visualize", [
       "Igloo Exterior view_Day.jpg",
       "Igloo Platform view_Day.jpg",
@@ -113,9 +118,16 @@ const skills = [
   },
   {
     title: "Automate",
-    text: "Cutting repetitive modelling work with Revit API, C# and Python tools that make delivery faster and more repeatable.",
+    text: "Automating repetitive modelling work with Dynamo, Revit API and Python tools that make delivery faster and more repeatable.",
     href: "#",
-    images: [] as string[],
+    images: [
+      // small top
+      photos("Automate", ["python.png"]),
+      // small bottom
+      photos("Automate", ["Revit API.webp"]),
+      // large right
+      photos("Automate", ["Geometry.jpg", "Vectors.png"])
+    ],
     visuals: [
       wrap("#1d1b19", `<g ${gold}><path d="M150 90 L100 130 L150 170 M250 90 L300 130 L250 170 M220 80 L180 180"/></g>`),
       wrap("#262320", `<g ${gold}><circle cx="200" cy="130" r="38"/><circle cx="200" cy="130" r="14"/></g><g stroke="#C89B4A" stroke-opacity=".85" stroke-width="9"><path d="M238 130 H252 M226.9 156.9 L236.8 166.8 M200 168 V182 M173.1 156.9 L163.2 166.8 M162 130 H148 M173.1 103.1 L163.2 93.2 M200 92 V78 M226.9 103.1 L236.8 93.2"/></g>`),
@@ -205,7 +217,11 @@ const skills = [
                   <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
               </a>
-              <a href="#" class="cv-link">Download CV</a>
+              <a
+                href={`${base}/Meghna_Jayanarayanan_BIM_Resume.pdf`}
+                download="Meghna_Jayanarayanan_BIM_Resume.pdf"
+                class="cv-link"
+              >Download CV</a>
             </div>
 
           </div>
@@ -363,7 +379,11 @@ const skills = [
 
           {skills.map((p, i) => {
             return (
-              <article class="project-stack-card" style={`--i:${i}`}>
+              <article
+                class="project-stack-card"
+                data-skill={p.title.toLowerCase()}
+                style={`--i:${i}`}
+              >
 
                 <div class="project-stack-header">
                   <div class="project-info-left">
@@ -371,7 +391,7 @@ const skills = [
                       <h3>{p.title}</h3>
                     </div>
                   </div>
-                  <a class="live-project-btn" href={p.href}>View Project</a>
+                  <a class="live-project-btn" href={p.href}>{p.button ?? "View Project"}</a>
                 </div>
 
                 <p class="stack-text">{p.text}</p>
@@ -486,6 +506,66 @@ const skills = [
           anchors: true
         });
       }
+
+
+      // ==========================================
+      // JUMP TO A SKILL CARD
+      // ------------------------------------------
+      // The detail pages link back with  /#skills-model,
+      // /#skills-coordinate, /#skills-collaborate, /#skills-visualize.
+      // Cards are "sticky", so a normal anchor can't find them. This
+      // works out the scroll position at which that card has just
+      // finished stacking, and scrolls there.
+      // ==========================================
+
+      let jumpedTo: number | null = null;
+
+      const jumpToSkillCard = () => {
+        const match = location.hash.match(/^#skills-([\w-]+)$/);
+        if (!match) return;
+
+        const cards = Array.from(
+          document.querySelectorAll<HTMLElement>(".project-stack-card")
+        );
+        const index = cards.findIndex((c) => c.dataset.skill === match[1]);
+        const container = document.querySelector<HTMLElement>(".stacked-cards-container");
+        if (index < 0 || !container) return;
+
+        // where the first card sits in the page before anything is stuck
+        let naturalTop =
+          container.getBoundingClientRect().top +
+          window.scrollY +
+          parseFloat(getComputedStyle(container).paddingTop || "0");
+
+        // walk down to the chosen card: heights + margins in between
+        for (let j = 0; j < index; j++) {
+          naturalTop +=
+            cards[j].offsetHeight +
+            parseFloat(getComputedStyle(cards[j]).marginBottom) +
+            parseFloat(getComputedStyle(cards[j + 1]).marginTop);
+        }
+
+        // the card stops (sticks) at this distance from the top of the screen
+        const stickyTop = parseFloat(getComputedStyle(cards[index]).top);
+        const y = Math.max(0, Math.round(naturalTop - stickyTop));
+
+        window.scrollTo({ top: y, behavior: "instant" });
+        jumpedTo = y;
+      };
+
+      const runJump = () => {
+        jumpToSkillCard();
+        // fonts can change the layout a little: correct once, but only
+        // if the visitor hasn't started scrolling away
+        document.fonts?.ready.then(() => {
+          if (jumpedTo !== null && Math.abs(window.scrollY - jumpedTo) < 3) {
+            jumpToSkillCard();
+          }
+        });
+      };
+
+      if (document.readyState === "complete") runJump();
+      else window.addEventListener("load", runJump);
 
 
       // ==========================================
