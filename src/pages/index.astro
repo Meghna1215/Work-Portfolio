@@ -39,6 +39,25 @@ const toSlots = (imgs: string[] | string[][]): string[][] =>
     : [0, 1, 2].map((n) => (imgs as string[]).filter((_, i) => i % 3 === n));
 
 // ------------------------------------------------------------
+// TOOLS TICKER (moves across the "Skills" heading row)
+// Put one logo file per tool in  public/logos/  (SVG or PNG with a
+// transparent background works best). Each logo is shown in the same
+// colour as the "Skills" heading, so the original colours don't matter.
+// If a file is missing, the tool's name still shows.
+// ------------------------------------------------------------
+const tools = [
+  { name: "Revit",      logo: "revit.svg" },
+  { name: "AutoCAD",    logo: "autocad.svg" },
+  { name: "3ds Max",    logo: "3dsmax.svg" },
+  { name: "Twinmotion", logo: "twinmotion.svg" },
+  { name: "SketchUp",   logo: "sketchup.svg" },
+  { name: "Python",     logo: "python.svg" },
+  { name: "Dynamo",     logo: "dynamo.svg" },
+  { name: "Blender",    logo: "blender.svg" },
+  { name: "Adobe",      logo: "adobe.svg" }
+];
+
+// ------------------------------------------------------------
 // One card per skill. Edit the text freely.
 //  - `href`  : link for the card's button (leave out for now = "#")
 //  - `button`: text on that button (leave out = "View Project")
@@ -372,6 +391,25 @@ const skills = [
 
         <div class="section-heading">
           <h2>Skills</h2>
+
+          <!-- moving tools strip (second copy makes the loop seamless) -->
+          <div class="tool-ticker" aria-label="Software I use">
+            <div class="tool-track">
+              {[0, 1].map((copy) =>
+                tools.map((t) => (
+                  <span class="tool-item" aria-hidden={copy === 1 ? "true" : undefined}>
+                    <span
+                      class="tool-logo"
+                      style={`--logo: url("${base}/logos/${t.logo}")`}
+                      aria-hidden="true"
+                    ></span>
+                    {t.name}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+
           <span class="scroll-hint">Scroll to explore</span>
         </div>
 

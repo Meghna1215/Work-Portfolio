@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import FullImage from "../components/FullImage.astro";
+import Lightbox from "../components/Lightbox.astro";
 
 // Works whether your configured base ends with a slash or not.
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -110,17 +112,7 @@ const steps = [
             <p>{step.text}</p>
           </div>
 
-          <figure class="step-figure">
-            <img src={step.image} alt={step.alt} loading="lazy" decoding="async" />
-            <a
-              class="view-full"
-              href={step.image}
-              target="_blank"
-              rel="noopener"
-            >
-              View full image <span aria-hidden="true">↗</span>
-            </a>
-          </figure>
+          <FullImage class="step-figure" src={step.image} alt={step.alt} />
         </section>
       ))}
 
@@ -132,6 +124,9 @@ const steps = [
       <span>MJ / Portfolio</span>
       <span>Built with intention.</span>
     </footer>
+
+
+    <Lightbox />
 
 
     <script>
@@ -300,26 +295,6 @@ const steps = [
     object-fit: contain;
     object-position: center;
     background: #1b1d22;
-  }
-
-  .view-full {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 14px 22px;
-    background: rgba(18, 18, 18, .92);
-    color: var(--bone);
-    font-size: .8rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background .25s ease, color .25s ease;
-  }
-
-  .view-full:hover {
-    background: var(--gold);
-    color: var(--graphite);
   }
 
   /* ---------- small screens ---------- */

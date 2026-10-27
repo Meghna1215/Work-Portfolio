@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import FullImage from "../components/FullImage.astro";
+import Lightbox from "../components/Lightbox.astro";
 
 // Works whether your configured base ends with a slash or not.
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -103,7 +105,7 @@ const canopies = [
             <article class="canopy-card">
               <div class:list={["canopy-images", c.images.length > 1 && "canopy-images--pair"]}>
                 {c.images.map((image) => (
-                  <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                  <FullImage src={image.src} alt={image.alt} />
                 ))}
               </div>
               <h3>{c.title}</h3>
@@ -121,6 +123,9 @@ const canopies = [
       <span>MJ / Portfolio</span>
       <span>Built with intention.</span>
     </footer>
+
+
+    <Lightbox />
 
 
     <script>
@@ -302,13 +307,18 @@ const canopies = [
     margin-bottom: 16px;
   }
 
-  .canopy-images img {
-    display: block;
+  .canopy-images .fullimg {
     flex: 1 1 0;
     min-height: 0;
-    width: 100%;
-    object-fit: cover;
     background: #101216;
+  }
+
+  .canopy-images .fullimg > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .canopy-card h3 {

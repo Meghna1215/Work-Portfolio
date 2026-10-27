@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import FullImage from "../components/FullImage.astro";
+import Lightbox from "../components/Lightbox.astro";
 
 // Works whether your configured base ends with a slash or not.
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -141,14 +143,14 @@ const projects = [
 
       <!-- ===== SELECTED MODELS ===== -->
       <section class="selected">
-        <h2 class="selected-title">Selected BIM works</h2>
+        <h2 class="selected-title">Additional modelling work</h2>
 
         <div class="project-grid">
           {projects.map((p) => (
             <article class:list={["project-card", p.wide && "project-card--wide"]}>
               <div class:list={["project-images", p.images.length > 1 && "project-images--pair"]}>
                 {p.images.map((image) => (
-                  <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+                  <FullImage src={image.src} alt={image.alt} />
                 ))}
               </div>
               <h3>{p.title}</h3>
@@ -166,6 +168,9 @@ const projects = [
       <span>MJ / Portfolio</span>
       <span>Built with intention.</span>
     </footer>
+
+
+    <Lightbox />
 
 
     <script>
@@ -485,12 +490,19 @@ const projects = [
     margin-bottom: 26px;
   }
 
-  .project-images img {
-    display: block;
+  /* each photo is a <FullImage> (figure) that shares the row */
+  .project-images .fullimg {
+    flex: 1 1 0;
+    min-width: 0;
+    background: #e9e6df;
+  }
+
+  .project-images .fullimg > img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background: #e9e6df;
   }
 
   /* single wide photo */
@@ -498,8 +510,8 @@ const projects = [
 
   /* two photos: first is larger, second is narrower */
   .project-images--pair { height: clamp(200px, 22vw, 313px); }
-  .project-images--pair img:first-child { flex: 1.8 1 0; min-width: 0; }
-  .project-images--pair img:last-child  { flex: 1 1 0;   min-width: 0; }
+  .project-images--pair .fullimg:first-child { flex: 1.8 1 0; }
+  .project-images--pair .fullimg:last-child  { flex: 1 1 0; }
 
   .project-card h3 {
     margin: 0 10px 10px;

@@ -1,0 +1,67 @@
+---
+// An image with a "View full image ↗" button in its bottom-right corner.
+// Clicking the button opens the image in the <Lightbox /> (see Lightbox.astro).
+//
+// Usage:  <FullImage src={...} alt="..." class="my-layout-class" />
+interface Props {
+  src: string;
+  alt?: string;
+  class?: string;
+}
+
+const { src, alt = "", class: className } = Astro.props;
+---
+
+<figure class:list={["fullimg", className]}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  <button type="button" class="view-full" data-full={src} data-alt={alt}>
+    View full image <span aria-hidden="true">↗</span>
+  </button>
+</figure>
+
+<style is:global>
+  /* :where() keeps these defaults at zero specificity,
+     so each page can override them with its own CSS */
+  .fullimg {
+    position: relative;
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  :where(.fullimg > img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .view-full {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 8px 14px;
+    border: 0;
+    background: rgba(18, 18, 18, .88);
+    color: var(--bone, #e6e0d6);
+    font: inherit;
+    font-size: clamp(.54rem, .62vw, .66rem);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background .25s ease, color .25s ease;
+  }
+
+  .view-full:hover,
+  .view-full:focus-visible {
+    background: var(--gold, #c89b4a);
+    color: var(--graphite, #121212);
+  }
+
+  @media (max-width: 760px) {
+    .view-full { padding: 6px 10px; }
+  }
+</style>
