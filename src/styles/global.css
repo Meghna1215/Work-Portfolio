@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
 
 :root {
   --bone: #E6E0D6;
@@ -662,39 +662,47 @@ a.live-project-btn:hover {
 .contact-layout {
   width: min(1120px, 100%);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 90px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(40px, 7vw, 110px);
   align-items: center;
 }
 
+/* "Let’s work" bold, "together." italic serif */
 .contact-section h2 {
-  font-size: clamp(3rem, 6vw, 6rem);
-  line-height: .9;
-  letter-spacing: -.06em;
   margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6.8vw, 6.8rem);
+  line-height: .92;
+  letter-spacing: -.06em;
+  color: #f1ece4;
 }
 
 .contact-section h2 em {
   font-family: "Playfair Display", serif;
-  font-weight: 500;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: -.045em;
 }
 
 .contact-details > p {
-  max-width: 470px;
-  color: rgba(230,224,214,.78);
-  line-height: 1.8;
+  max-width: 440px;
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  line-height: 1.55;
+  color: rgba(230,224,214,.86);
 }
 
 .big-link {
   overflow-wrap: anywhere;
   display: inline-flex;
-  gap: 18px;
+  gap: 24px;
   align-items: center;
   font-size: clamp(1rem, 1.7vw, 1.4rem);
   font-weight: 700;
   border-bottom: 2px solid var(--bone);
   padding-bottom: 12px;
-  margin: 25px 0 0;
+  margin: 30px 0 0;
 }
 
 /* Tablets and phones: stack the two columns so nothing is cut off */
