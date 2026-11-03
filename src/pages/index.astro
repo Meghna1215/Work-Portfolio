@@ -40,21 +40,23 @@ const toSlots = (imgs: string[] | string[][]): string[][] =>
 
 // ------------------------------------------------------------
 // TOOLS TICKER (moves across the "Skills" heading row)
-// Put one logo file per tool in  public/logos/  (SVG or PNG with a
-// transparent background works best). Each logo is shown in the same
-// colour as the "Skills" heading, so the original colours don't matter.
-// If a file is missing, the tool's name still shows.
+// The logo files live in  public/logos/  and are PNG files with a
+// transparent background. Each logo is shown in the same colour as the
+// "Skills" heading. `logo` must match the file name exactly (spaces and
+// capitals included). To add a tool, add a line; to remove one, delete it.
 // ------------------------------------------------------------
 const tools = [
-  { name: "Revit",      logo: "revit.svg" },
-  { name: "AutoCAD",    logo: "autocad.svg" },
-  { name: "3ds Max",    logo: "3dsmax.svg" },
-  { name: "Twinmotion", logo: "twinmotion.svg" },
-  { name: "SketchUp",   logo: "sketchup.svg" },
-  { name: "Python",     logo: "python.svg" },
-  { name: "Dynamo",     logo: "dynamo.svg" },
-  { name: "Blender",    logo: "blender.svg" },
-  { name: "Adobe",      logo: "adobe.svg" }
+  { name: "Revit",       logo: "Revit.png" },
+  { name: "AutoCAD",     logo: "AutoCAD.png" },
+  { name: "3ds Max",     logo: "3Ds Max.png" },
+  { name: "Navisworks",  logo: "Navisworks.png" },
+  { name: "Dynamo",      logo: "Dynamo.png" },
+  { name: "ACC",         logo: "ACC.png" },
+  { name: "Twinmotion",  logo: "Twinmotion.png" },
+  { name: "Lumion",      logo: "Lumion.png" },
+  { name: "Photoshop",   logo: "Photoshop.png" },
+  { name: "Illustrator", logo: "Illustrator.png" },
+  { name: "InDesign",    logo: "InDesign.png" }
 ];
 
 // ------------------------------------------------------------
@@ -404,7 +406,7 @@ const skills = [
                   <span class="tool-item" aria-hidden={copy === 1 ? "true" : undefined}>
                     <span
                       class="tool-logo"
-                      style={`--logo: url("${base}/logos/${t.logo}")`}
+                      style={`--logo: url("${encodeURI(`${base}/logos/${t.logo}`)}")`}
                       aria-hidden="true"
                     ></span>
                     {t.name}
