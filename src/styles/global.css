@@ -376,8 +376,9 @@ h1, h2, h3, p { margin-top: 0; }
 /* the logo is used as a stencil and filled with the text colour */
 .tool-logo {
   flex: none;
-  width: 1.6em;
-  height: 1.6em;
+  /* logo size: change 2.6rem to make ALL logos bigger or smaller */
+  width: calc(2.6rem * var(--scale, 1));
+  height: calc(2.6rem * var(--scale, 1));
   background-color: currentColor;
   -webkit-mask: var(--logo) center / contain no-repeat;
           mask: var(--logo) center / contain no-repeat;
