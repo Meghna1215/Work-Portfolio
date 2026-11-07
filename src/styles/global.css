@@ -393,10 +393,6 @@ h1, h2, h3, p { margin-top: 0; }
   .tool-track { animation: none; }
 }
 
-@media (max-width: 560px) {
-  .tool-ticker { display: none; }
-}
-
 .scroll-hint {
   color: var(--muted);
   font-size: .78rem;
@@ -1021,4 +1017,46 @@ html.lenis, html.lenis body { height: auto; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+}
+
+
+/* ==========================================
+   PHONES: the tools ticker moves to its own row under
+   "SKILLS / SCROLL TO EXPLORE", so it is still visible and still moving.
+   ========================================== */
+@media (max-width: 680px) {
+
+  .stacked-works-section {
+    /* taller title strip: two rows (title + hint, then the ticker) */
+    --works-heading-h: 5.7rem;
+  }
+
+  .stacked-works-section .section-heading {
+    flex-wrap: wrap;
+    align-content: center;
+    row-gap: 8px;
+  }
+
+  .scroll-hint {
+    font-size: .62rem;
+    letter-spacing: .06em;
+  }
+
+  .tool-ticker {
+    order: 3;
+    flex: 0 0 100%;
+    margin: 0;
+  }
+
+  .tool-item {
+    gap: 7px;
+    padding-right: 28px;
+    font-size: .75rem;
+  }
+
+  .tool-logo {
+    /* phone logo size: change 1.7rem to make all logos bigger or smaller */
+    width: calc(1.7rem * var(--scale, 1));
+    height: calc(1.7rem * var(--scale, 1));
+  }
 }
