@@ -345,8 +345,8 @@ const skills = [
         </div>
 
         <ol class="timeline">
-          {timeline.map((item) => (
-            <li class="timeline-item">
+          {timeline.map((item, i) => (
+            <li class="timeline-item" style={`--i:${timeline.length - 1 - i}`}>
               <span class="timeline-mark" aria-hidden="true">
                 {item.logo
                   ? <img src={item.logo} alt="" loading="lazy" decoding="async" />
@@ -529,6 +529,55 @@ const skills = [
           wheelMultiplier: 0.8,
           anchors: true
         });
+      }
+
+
+      // ==========================================
+      // MY STORY: entries rise in one by one, bottom to top
+      // ------------------------------------------
+      // The class "story-in" (which plays the CSS animation) is added once
+      // the My Story section has mostly scrolled into place - so it plays
+      // whether you arrive by scrolling, by the menu / "My story" button,
+      // or by loading the page there. It is removed when the section has
+      // left the screen, so it plays again next time.
+      // ==========================================
+
+      const storySection = document.querySelector<HTMLElement>("#story");
+
+      if (storySection) {
+        if (reduceMotion) {
+          storySection.classList.add("story-in");
+        } else {
+          const updateStory = () => {
+            const vh = window.innerHeight;
+            const rect = storySection.getBoundingClientRect();
+
+            const arrived = rect.top <= vh * 0.35 && rect.bottom >= vh * 0.5;
+            const gone = rect.top >= vh * 0.95 || rect.bottom <= vh * 0.05;
+
+            if (arrived) storySection.classList.add("story-in");
+            else if (gone) storySection.classList.remove("story-in");
+          };
+
+          let storyTicking = false;
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (storyTicking) return;
+              storyTicking = true;
+              requestAnimationFrame(() => {
+                updateStory();
+                storyTicking = false;
+              });
+            },
+            { passive: true }
+          );
+          window.addEventListener("resize", updateStory);
+
+          // first check: wait two frames so the hidden starting state has
+          // been painted and the animation can play on page load
+          requestAnimationFrame(() => requestAnimationFrame(updateStory));
+        }
       }
 
 
