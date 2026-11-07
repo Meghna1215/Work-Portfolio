@@ -424,47 +424,126 @@ h1, h2, h3, p { margin-top: 0; }
   scroll-snap-align: start;
 }
 
-/* STORY */
-.story-section { background: var(--graphite); }
-
-.story-card {
-  min-height: 410px;
-  padding: 34px;
-  background: var(--olive);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* STORY: timeline (newest at the top, oldest at the bottom) */
+.story-section {
+  background: var(--olive);        /* #6B6F4E */
+  color: var(--bone);
+  /* grows with the content instead of clipping on short screens */
+  height: auto;
+  min-height: 100svh;
+  max-height: none;
+  overflow: visible;
+  padding-bottom: clamp(36px, 6vh, 70px);
 }
 
-.story-card--large {
-  flex-basis: min(520px, 82vw);
+.story-section .section-heading { margin-bottom: clamp(22px, 4vh, 40px); }
+
+.timeline {
+  list-style: none;
+  position: relative;
+  width: min(1000px, 100%);
+  margin: 0;
+  padding: 0 0 0 38px;
+}
+
+/* the vertical line */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 4px;
+  background: rgba(230, 224, 214, .32);
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding-bottom: clamp(16px, 3.2vh, 30px);
+}
+
+.timeline-item:last-child { padding-bottom: 0; }
+
+/* the dot on the line */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -38px;
+  top: 14px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
   background: var(--bone);
-  color: var(--graphite);
 }
 
-.story-card--accent { background: var(--merlot); }
-
-.card-number {
-  font-family: "Playfair Display", serif;
-  font-size: .95rem;
-  opacity: .7;
+/* logo (or bold text): no backing colour, so it sits straight on the green */
+.timeline-mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  color: var(--bone);
 }
 
-.story-card h3 {
-  font-size: clamp(2rem, 3vw, 3rem);
-  line-height: .96;
+.timeline-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* bold text used instead of a logo (JBS): about the same width as a logo */
+.timeline-mark b {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
   letter-spacing: -.04em;
-  margin: 35px 0 auto;
+  line-height: 1;
+  color: #000;
 }
 
-.story-card p {
-  max-width: 360px;
-  line-height: 1.65;
-  color: rgba(230,224,214,.78);
-  margin: 30px 0 0;
+.timeline-body h3 {
+  margin: 0 0 2px;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--bone);
 }
 
-.story-card--large p { color: rgba(18,18,18,.68); }
+.timeline-body p { margin: 0; }
+
+.timeline-org {
+  font-size: .98rem;
+  color: rgba(230, 224, 214, .92);
+}
+
+.timeline-dates {
+  margin-top: 2px;
+  font-size: .9rem;
+  color: rgba(230, 224, 214, .68);
+}
+
+.timeline-text {
+  max-width: 62em;
+  margin-top: 8px;
+  font-size: clamp(.92rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: rgba(230, 224, 214, .88);
+}
+
+@media (max-width: 600px) {
+  .timeline { padding-left: 30px; }
+  .timeline::before { left: 2px; }
+  .timeline-item::before { left: -30px; }
+  .timeline-item { grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+  .timeline-mark { width: 44px; height: 44px; }
+  .timeline-mark b { font-size: 1.3rem; }
+}
 
 /* ==========================================
    WORKS: STICKY STACKED CARDS
