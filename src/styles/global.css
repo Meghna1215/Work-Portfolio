@@ -1027,14 +1027,19 @@ html.lenis, html.lenis body { height: auto; }
 @media (max-width: 680px) {
 
   .stacked-works-section {
-    /* taller title strip: two rows (title + hint, then the ticker) */
-    --works-heading-h: 5.7rem;
+    /* title strip height: row 1 (title + hint) + the gap + row 2 (ticker).
+       This is tuned so the gap between SKILLS and the logos equals the gap
+       between the logos and the first card. If they ever look uneven, change
+       this number (bigger = more space between SKILLS and the logos). */
+    --works-heading-h: 4.6rem;
   }
 
   .stacked-works-section .section-heading {
     flex-wrap: wrap;
-    align-content: center;
-    row-gap: 8px;
+    /* row 1 sits at the top, the ticker at the bottom, so the space above the
+       card is always the same as the space between the two rows */
+    align-content: space-between;
+    row-gap: 6px;
   }
 
   .scroll-hint {
