@@ -24,7 +24,7 @@ const img = (file: string) => encodeURI(`${base}/Model/${file}`);
 const title = "Model";
 
 const intro =
-  "An interactive look at a typical elevated metro station at the concourse level. Modelling is where every project starts: turning design intent into accurate, coordinated geometry and data that the whole team can rely on.";
+  "An interactive, isolated view of the concourse level of an elevated metro station, showcasing the architectural modelling and spatial organization of this key transit space. The model highlights the level of detail and precision involved in developing coordinated BIM models for large-scale infrastructure projects.";
 
 // Cards under "Additional modelling work".
 //  - `wide: true`  -> card spans the full row
@@ -113,6 +113,7 @@ const projects = [
               min-camera-orbit="auto auto 10%"
               max-camera-orbit="auto auto 400%"
               interaction-prompt="none"
+              field-of-view="45deg"
             ></model-viewer>
 
             <div class="viewer-toolbar">
@@ -212,19 +213,62 @@ const projects = [
         loadingText.textContent = `Loading model… ${pct}%`;
       });
 
-      viewer.addEventListener("load", () => loading.classList.add("done"));
+      // ---- FIT: zoom so the model fills 70% of the viewer box ----
+      // FIT = how much of the box the model should fill (0.7 = 70%).
+      // Make it bigger (e.g. 0.8) to zoom in more, smaller (e.g. 0.6) to zoom out.
+      const FIT = 0.7;
+
+      const fitModel = () => {
+        const size = viewer.getDimensions();           // model size in metres {x, y, z}
+        const box = viewer.getBoundingClientRect();
+        if (!size || !box.width || !box.height) return;
+
+        const aspect = box.width / box.height;
+        const tanHalfFov = Math.tan((45 * Math.PI) / 360);   // 45deg vertical field of view
+        const phi = (75 * Math.PI) / 180;                    // starting camera angle (75deg)
+
+        // size of the model as seen from the starting camera angle
+        const seenWidth = size.x;
+        const seenHeight = size.y * Math.sin(phi) + size.z * Math.cos(phi);
+
+        // distance at which that size fills FIT of the box (width or height,
+        // whichever is the tighter one); + z/2 because the nearest face is closer
+        const distance =
+          Math.max(
+            seenWidth / 2 / (tanHalfFov * aspect),
+            seenHeight / 2 / tanHalfFov
+          ) / FIT +
+          size.z / 2;
+
+        viewer.cameraTarget = "auto auto auto";
+        viewer.cameraOrbit = `0deg 75deg ${distance}m`;
+        viewer.jumpCameraToGoal();
+      };
+
+      viewer.addEventListener("load", () => {
+        fitModel();
+        loading.classList.add("done");
+      });
+
+      // keep the fit when the window is resized (only if the visitor hasn't
+      // moved the camera themselves yet)
+      let userMoved = false;
+      viewer.addEventListener("camera-change", (event) => {
+        if (event.detail && event.detail.source === "user-interaction") userMoved = true;
+      });
+      window.addEventListener("resize", () => {
+        if (!userMoved) fitModel();
+      });
 
       viewer.addEventListener("error", () => {
         loading.classList.add("done");
         errorBox.hidden = false;
       });
 
-      // ---- reset view: back to the automatic framing ----
+      // ---- reset view: back to the fitted view ----
       resetBtn.addEventListener("click", () => {
-        viewer.cameraTarget = "auto auto auto";
-        viewer.cameraOrbit = "auto auto auto";
-        viewer.fieldOfView = "auto";
-        viewer.jumpCameraToGoal();
+        userMoved = false;
+        fitModel();
       });
 
       // ---- auto-rotate toggle ----

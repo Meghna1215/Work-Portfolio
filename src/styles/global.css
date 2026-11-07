@@ -348,9 +348,11 @@ h1, h2, h3, p { margin-top: 0; }
   min-width: 0;
   align-self: center;
   overflow: hidden;
-  margin: 0 clamp(16px, 4vw, 60px);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  /* right margin = where the logos start to appear (the right end of the strip).
+     Bigger number = the logos start further to the left. */
+  margin: 0 clamp(16px, 6.6vw, 130px) 0 clamp(16px, 4vw, 60px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 95%, transparent);
 }
 
 .tool-track {

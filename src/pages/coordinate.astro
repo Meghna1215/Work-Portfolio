@@ -21,28 +21,50 @@ const headline = "From multidisciplinary test to verified model resolution.";
 const intro =
   "A clear coordination story focused on how clashes are detected, understood and corrected.";
 
-// One section per step (scroll 2, 3 and 4).
+// One section per step (scroll 2 onwards).
+// `images` can hold one or more pictures; with two or more they are stacked
+// one under the other and the text stays in view while you scroll past them.
 const steps = [
   {
     number: "01",
-    heading: "Test",
-    text: "Compare the relevant model disciplines using defined clash rules.",
-    image: img("Running a clash.png"),
-    alt: "Navisworks Clash Detective: setting up and running a clash test"
+    heading: "Combine Models",
+    text: "Bring architectural, structural, and building services models together for multidisciplinary coordination.",
+    images: [
+      { src: img("Combine Models.png"), alt: "Architectural, structural and services models combined in one federated model" }
+    ]
   },
   {
     number: "02",
-    heading: "Identify",
-    text: "Isolate the conflict and identify the affected elements.",
-    image: img("Clash Detection.png"),
-    alt: "Navisworks Clash Detective: clash results highlighted in the model"
+    heading: "Run Clash Test",
+    text: "Perform clash detection in Navisworks to identify conflicts between different disciplines.",
+    images: [
+      { src: img("Running a clash.png"), alt: "Navisworks Clash Detective: setting up and running a clash test" }
+    ]
   },
   {
     number: "03",
-    heading: "Resolve",
-    text: "Correct the model, rerun the test and confirm the clash is resolved.",
-    image: img("Resolving a clash.png"),
-    alt: "Navisworks Clash Detective: clashes resolved after correcting the model"
+    heading: "Review Clashes",
+    text: "Examine detected clashes to identify affected elements and determine the necessary action.",
+    images: [
+      { src: img("Clash Detection.png"), alt: "Navisworks Clash Detective: clash results highlighted in the model" },
+      { src: img("Review Clashes.png"), alt: "Reviewing an individual clash and the elements affected" }
+    ]
+  },
+  {
+    number: "04",
+    heading: "Resolve Internally",
+    text: "Make necessary model adjustments to resolve clashes within my scope of work.",
+    images: [
+      { src: img("Resolving a clash.png"), alt: "Navisworks Clash Detective: clashes resolved after correcting the model" }
+    ]
+  },
+  {
+    number: "05",
+    heading: "Share Report",
+    text: "Document and share unresolved clashes with the respective contractors for further coordination and correction.",
+    images: [
+      { src: img("Report Sharing.png"), alt: "Clash report prepared to share with the contractors" }
+    ]
   }
 ];
 ---
@@ -89,16 +111,20 @@ const steps = [
       </section>
 
 
-      <!-- ===== SCROLL 2, 3, 4: Test / Identify / Resolve ===== -->
+      <!-- ===== SCROLL 2-6: the five coordination steps ===== -->
       {steps.map((step) => (
-        <section class="coord-step">
+        <section class:list={["coord-step", step.images.length > 1 && "coord-step--multi"]}>
           <div class="step-text">
             <span class="step-number">{step.number}</span>
             <h2>{step.heading}</h2>
             <p>{step.text}</p>
           </div>
 
-          <FullImage class="step-figure" src={step.image} alt={step.alt} />
+          <div class="step-figures">
+            {step.images.map((image) => (
+              <FullImage class="step-figure" src={image.src} alt={image.alt} />
+            ))}
+          </div>
         </section>
       ))}
 
@@ -224,7 +250,7 @@ const steps = [
     color: rgba(230, 224, 214, .8);
   }
 
-  /* ---------- SCROLL 2-4: steps ---------- */
+  /* ---------- SCROLL 2-6: steps ---------- */
   .coord-step {
     min-height: 100svh;
     display: grid;
@@ -238,7 +264,24 @@ const steps = [
     border-top: 1px solid var(--line);
   }
 
-  .step-text { max-width: 26em; }
+  .step-text { max-width: 26em; min-width: 0; }
+
+  /* stack of one or more pictures */
+  .step-figures {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vw, 36px);
+    min-width: 0;
+  }
+
+  /* a step with 2+ pictures is taller than the screen: line the text up with
+     the first picture and keep it in view while you scroll past them */
+  .coord-step--multi { align-items: start; }
+
+  .coord-step--multi .step-text {
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+  }
 
   .step-number {
     display: block;
@@ -253,10 +296,11 @@ const steps = [
     margin: 0 0 24px;
     font-family: "DM Sans", system-ui, sans-serif;
     font-weight: 700;
-    font-size: clamp(3rem, 6.4vw, 5.6rem);
-    line-height: .95;
-    letter-spacing: -.05em;
+    font-size: clamp(2rem, 3.4vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -.04em;
     text-transform: uppercase;
+    overflow-wrap: break-word;
     color: var(--bone);
   }
 
@@ -301,5 +345,7 @@ const steps = [
     }
 
     .step-figure img { max-height: none; }
+
+    .coord-step--multi .step-text { position: static; }
   }
 </style>

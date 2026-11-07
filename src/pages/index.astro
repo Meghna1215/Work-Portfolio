@@ -39,7 +39,7 @@ const toSlots = (imgs: string[] | string[][]): string[][] =>
     : [0, 1, 2].map((n) => (imgs as string[]).filter((_, i) => i % 3 === n));
 
 // ------------------------------------------------------------
-// MY STORY TIMELINE (newest at the top, oldest at the bottom)
+// MY JOURNEY TIMELINE (newest at the top, oldest at the bottom)
 // Logos live in  public/logos 4 story/  (file names must match exactly).
 // Use `logo` for a picture, or `badge` for bold text instead (e.g. "JBS").
 // ------------------------------------------------------------
@@ -103,7 +103,8 @@ const tools = [
 
 // ------------------------------------------------------------
 // One card per skill. Edit the text freely.
-//  - `href`  : link for the card's button (leave out for now = "#")
+//  - `href`  : link for the card's button. While it is "#" (or missing) the
+//              button is HIDDEN; set a real link and it appears automatically.
 //  - `button`: text on that button (leave out = "View Project")
 //  - `images`: real photos (see photos() above). Leave as [] to
 //              show the placeholder SVG visuals instead.
@@ -324,7 +325,7 @@ const skills = [
             </p>
 
             <a class="text-link" href="#story">
-              My story
+              My journey
               <span>→</span>
             </a>
 
@@ -335,12 +336,12 @@ const skills = [
       </section>
 
 
-      <!-- MY STORY -->
+      <!-- MY JOURNEY (id stays "story" so existing links keep working) -->
       <section id="story" class="section story-section">
 
         <div class="section-heading">
           <div>
-            <h2>My Story</h2>
+            <h2>My Journey</h2>
           </div>
         </div>
 
@@ -396,7 +397,6 @@ const skills = [
             </div>
           </div>
 
-          <span class="scroll-hint">Scroll to explore</span>
         </div>
 
         <div class="stacked-cards-container">
@@ -415,7 +415,9 @@ const skills = [
                       <h3>{p.title}</h3>
                     </div>
                   </div>
-                  <a class="live-project-btn" href={p.href}>{p.button ?? "View Project"}</a>
+                  {p.href && p.href !== "#" && (
+                    <a class="live-project-btn" href={p.href}>{p.button ?? "View Project"}</a>
+                  )}
                 </div>
 
                 <p class="stack-text">{p.text}</p>
@@ -533,11 +535,11 @@ const skills = [
 
 
       // ==========================================
-      // MY STORY: entries rise in one by one, bottom to top
+      // MY JOURNEY: entries rise in one by one, bottom to top
       // ------------------------------------------
       // The class "story-in" (which plays the CSS animation) is added once
-      // the My Story section has mostly scrolled into place - so it plays
-      // whether you arrive by scrolling, by the menu / "My story" button,
+      // the My Journey section has mostly scrolled into place - so it plays
+      // whether you arrive by scrolling, by the menu / "My journey" button,
       // or by loading the page there. It is removed when the section has
       // left the screen, so it plays again next time.
       // ==========================================
