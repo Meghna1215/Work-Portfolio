@@ -1067,3 +1067,50 @@ html.lenis, html.lenis body { height: auto; }
     height: calc(1.7rem * var(--scale, 1));
   }
 }
+
+
+/* ==========================================
+   PHONES: home hero
+   The photo takes ALL the height that is left between the name block above
+   and the text below, so it is as big as the screen allows, and the gap above
+   it equals the gap below it.
+   ========================================== */
+@media (max-width: 680px) {
+
+  .hero {
+    padding-bottom: clamp(18px, 3svh, 30px);
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: stretch;          /* fill the hero's full height */
+    /* the gap above and below the photo: change this one value to taste */
+    gap: clamp(14px, 3svh, 28px);
+  }
+
+  .hero-intro,
+  .hero-copy {
+    flex: none;
+  }
+
+  .hero-portrait {
+    flex: 1 1 0;                  /* grow to use the remaining height */
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: auto;
+    margin: 0;
+  }
+
+  .hero-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .socials { margin-top: 14px; }
+}
