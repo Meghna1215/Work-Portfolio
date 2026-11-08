@@ -1105,28 +1105,13 @@ html.lenis, html.lenis body { height: auto; }
     margin: 0;
   }
 
-  /* The photo file has some empty (transparent) space above the head, which
-     made the gap above look bigger than the gap below. We enlarge the picture
-     and let that empty strip slide up out of the box, so the head sits at the
-     top edge and the feet at the bottom edge.
-     --empty-top = how much of the picture's height is empty above the head
-     (0.22 = 22%). Bigger number = photo moves up and gets bigger;
-     smaller number = the opposite. */
-  .hero-portrait {
-    --empty-top: .22;
-    position: relative;
-    overflow: hidden;
-  }
-
+  /* the photo is cropped tight, so it simply fills the free height:
+     head at the top edge of the box, feet at the bottom edge */
   .hero-portrait img {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: auto;
-    max-width: none;
-    height: calc(100% / (1 - var(--empty-top)));
-    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
     object-fit: contain;
+    object-position: center;
   }
 
   .socials { margin-top: 14px; }
